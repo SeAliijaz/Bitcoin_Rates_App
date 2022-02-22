@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final bitCoinModel = bitCoinModelFromJson(jsonString);
-
 import 'dart:convert';
 
 BitCoinModel bitCoinModelFromJson(String str) =>

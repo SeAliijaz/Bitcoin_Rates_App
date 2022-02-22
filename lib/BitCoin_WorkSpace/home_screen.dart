@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:bitcoin_rates_api/Constants/constants.dart';
 import 'package:bitcoin_rates_api/Models/bitcoin_model.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
@@ -64,24 +63,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Column(
                     children: [
-                      _widget('Time of Release', headTextStyle),
+                      _widget('Time of Release', textStyle1),
                       Divider(),
-                      _widget('${val.time.updated}', lowerTextStyle),
+                      _widget('${val.time.updated}', textStyle2),
                       Divider(),
-                      _widget('Dsisclaimer', headTextStyle),
+                      _widget('Dsisclaimer', textStyle1),
                       Divider(),
-                      _widget('${val.disclaimer}', lowerTextStyle),
+                      _widget('${val.disclaimer}', textStyle2),
                       Divider(),
-                      _widget('Rates', headTextStyle),
+                      _widget('Rates', textStyle1),
                       Divider(),
-                      _widget('EURO ', lowerTextStyle),
-                      _widget('${val.bpi.eur.rate}', lowerTextStyle),
+                      _widget('EURO ', textStyle2),
+                      _widget('${val.bpi.eur.rate}', textStyle2),
                       Divider(),
-                      _widget('GBP ', lowerTextStyle),
-                      _widget('${val.bpi.gbp.rate}', lowerTextStyle),
+                      _widget('GBP ', textStyle2),
+                      _widget('${val.bpi.gbp.rate}', textStyle2),
                       Divider(),
-                      _widget('USD ', lowerTextStyle),
-                      _widget('${val.bpi.usd.rate}', lowerTextStyle),
+                      _widget('USD ', textStyle2),
+                      _widget('${val.bpi.usd.rate}', textStyle2),
                     ],
                   )
                 ],
@@ -93,14 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  ///Made a Widget
   Widget _widget(String text, TextStyle textStyle) {
     return Container(
       child: ListTile(
         title: Center(
-          child: Text(
-            text,
-            style: textStyle,
-          ),
+          child: Text(text, style: textStyle),
         ),
       ),
     );
