@@ -1,5 +1,10 @@
 import 'dart:convert';
 
+/************
+ * Use this link to make API Models Quickly
+ * https://app.quicktype.io/
+ ************/
+
 BitCoinModel bitCoinModelFromJson(String str) =>
     BitCoinModel.fromJson(json.decode(str));
 

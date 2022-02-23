@@ -1,15 +1,25 @@
 import 'dart:convert';
-import 'package:bitcoin_rates_api/Constants/constants.dart';
 import 'package:bitcoin_rates_api/Models/bitcoin_model.dart';
+import 'package:bitcoin_rates_api/Widgets/coins_rates.dart';
+import 'package:bitcoin_rates_api/Widgets/coins_symbol.dart';
+import 'package:bitcoin_rates_api/Widgets/head_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+
+/************
+ * Use this link to make API Models Quickly
+ * https://app.quicktype.io/
+ ************/
 
 class HomeScreen extends StatefulWidget {
   ///final id
   static final id = '/HomeScreen';
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() {
+    return _HomeScreenState();
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -25,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     http.Response response = await http.get(Uri.parse(apiURL));
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     bitCoinModel = BitCoinModel.fromJson(jsonResponse);
-    print(jsonResponse);
-    print(response.body);
     return bitCoinModel;
   }
 
@@ -59,45 +67,117 @@ class _HomeScreenState extends State<HomeScreen> {
             final val = snapshot.data;
             return SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      _widget('Time of Release', textStyle1),
-                      Divider(),
-                      _widget('${val.time.updated}', textStyle2),
-                      Divider(),
-                      _widget('Dsisclaimer', textStyle1),
-                      Divider(),
-                      _widget('${val.disclaimer}', textStyle2),
-                      Divider(),
-                      _widget('Rates', textStyle1),
-                      Divider(),
-                      _widget('EURO ', textStyle2),
-                      _widget('${val.bpi.eur.rate}', textStyle2),
-                      Divider(),
-                      _widget('GBP ', textStyle2),
-                      _widget('${val.bpi.gbp.rate}', textStyle2),
-                      Divider(),
-                      _widget('USD ', textStyle2),
-                      _widget('${val.bpi.usd.rate}', textStyle2),
-                    ],
-                  )
+                  /************
+                   * HeadingcText Widget
+                   ************/
+                  HeadingTextWidget(txt: 'Time Of Release'),
+
+                  /************
+                   * Timer of Update Price
+                   ************/
+                  Container(
+                    width: s.width,
+                    child: Center(
+                      child: Text(
+                        '${val.time.updated}',
+                        style: GoogleFonts.lateef(
+                          textStyle: TextStyle(
+                            fontSize: 30.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  /************
+                  * Divider
+                  ************/
+                  Divider(),
+
+                  /************
+                   * Heading Text Widget
+                   ************/
+                  HeadingTextWidget(txt: 'Disclaimer'),
+
+                  /************
+                   * Disclaimer
+                   ************/
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: s.width,
+                      child: Center(
+                        child: Text(
+                          '${val.disclaimer}',
+                          style: GoogleFonts.lateef(
+                            textStyle: TextStyle(
+                              fontSize: 30.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  /************
+                  * Divider
+                  ************/
+                  Divider(),
+
+                  /************
+                   * Heading Text Widget
+                   ************/
+                  HeadingTextWidget(txt: 'Coins Rates'),
+
+                  /************
+                   * Coins Rates Widget
+                   ************/
+                  CoinRatesWidget(
+                    txtCode: '${val.bpi.eur.code}',
+                    txtPrice: '${val.bpi.eur.rate}',
+                    s: s,
+                  ),
+                  CoinRatesWidget(
+                    txtCode: '${val.bpi.gbp.code}',
+                    txtPrice: '${val.bpi.gbp.rate}',
+                    s: s,
+                  ),
+                  CoinRatesWidget(
+                    txtCode: '${val.bpi.usd.code}',
+                    txtPrice: '${val.bpi.usd.rate}',
+                    s: s,
+                  ),
+
+                  /************
+                   * Divider
+                   ************/
+                  Divider(),
+
+                  /************
+                   * Heading Text Widget
+                   ************/
+                  HeadingTextWidget(txt: 'Coins Symbols'),
+
+                  /************
+                   * Coins Symbol Widget
+                   ************/
+                  CoinsSymbolWidget(
+                    txtCode: '${val.bpi.eur.code}',
+                    txtSymbol: '${val.bpi.eur.symbol}',
+                  ),
+                  CoinsSymbolWidget(
+                    txtCode: '${val.bpi.gbp.code}',
+                    txtSymbol: '${val.bpi.gbp.symbol}',
+                  ),
+                  CoinsSymbolWidget(
+                    txtCode: '${val.bpi.usd.code}',
+                    txtSymbol: '${val.bpi.usd.symbol}',
+                  ),
                 ],
               ),
             );
           },
-        ),
-      ),
-    );
-  }
-
-  ///Made a Widget
-  Widget _widget(String text, TextStyle textStyle) {
-    return Container(
-      child: ListTile(
-        title: Center(
-          child: Text(text, style: textStyle),
         ),
       ),
     );
