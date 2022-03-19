@@ -27,12 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Map data;
 
   ///API Link Object
-  String apiURL = 'https://api.coindesk.com/v1/bpi/currentprice.json';
+  String url = 'https://api.coindesk.com/v1/bpi/currentprice.json';
 
   ///FetchData Method
   Future<BitCoinModel> fetchData() async {
     BitCoinModel bitCoinModel;
-    http.Response response = await http.get(Uri.parse(apiURL));
+    http.Response response = await http.get(Uri.parse(url));
     Map<String, dynamic> jsonResponse = json.decode(response.body);
     bitCoinModel = BitCoinModel.fromJson(jsonResponse);
     return bitCoinModel;
@@ -63,6 +63,28 @@ class _HomeScreenState extends State<HomeScreen> {
               (BuildContext context, AsyncSnapshot<BitCoinModel> snapshot) {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      "LOADING...",
+                      style: GoogleFonts.lateef(
+                        textStyle: TextStyle(
+                          fontSize: 35.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: LinearProgressIndicator(),
+                  ),
+                ],
+              );
             }
             final val = snapshot.data;
             return SingleChildScrollView(
