@@ -9,6 +9,7 @@ class HeadingTextWidget extends StatelessWidget {
   HeadingTextWidget({this.txt});
   @override
   Widget build(BuildContext context) {
+    final Size s = MediaQuery.of(context).size;
     return Container(
       child: Center(
         child: Text(
